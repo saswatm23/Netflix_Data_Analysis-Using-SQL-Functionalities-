@@ -48,3 +48,25 @@ group by genre
 order by avg_rating desc
 )where avg_rating is not null
 limit 10
+
+(Q5)Categories the Genre according to Age-Certification
+
+select 
+	Case
+	  when Age_Certification<='PG' Then 'Children'
+	  when Age_Certification<='PG_13' Then 'Teen'
+	  when Age_Certification in ('R','TV-MA') Then 'Adult'
+else 'Unknown'
+end as Age_Category,Genre,
+Count(*) as Genre_Count
+from netflix_data
+GROUP BY Age_Category,Genre
+limit 10;
+
+(Q6)Find the 2nd Highest Ranked Movie that is Made in the the year 2022
+
+select title,imdb_score
+from netflix_data
+where release_year=2022 and imdb_score=(select Max(Imdb_score) from netflix_data 
+									where release_year=2022 and imdb_score<
+			
